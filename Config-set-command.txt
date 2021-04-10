@@ -1,0 +1,139 @@
+set logical-systems CE1 interfaces ge-0/0/2 unit 101 description to-PE1
+set logical-systems CE1 interfaces ge-0/0/2 unit 101 vlan-id 101
+set logical-systems CE1 interfaces ge-0/0/2 unit 101 family inet6 address ::10.1.1.1/126
+set logical-systems CE1 interfaces ge-0/0/2 unit 101 family mpls
+set logical-systems CE1 interfaces lo0 unit 101 family inet6 address ::1.1.1.1/128
+set logical-systems CE1 protocols bgp group to-PE1 type external
+set logical-systems CE1 protocols bgp group to-PE1 local-address ::10.1.1.1
+set logical-systems CE1 protocols bgp group to-PE1 family inet6 unicast
+set logical-systems CE1 protocols bgp group to-PE1 export send-v6
+set logical-systems CE1 protocols bgp group to-PE1 peer-as 2
+set logical-systems CE1 protocols bgp group to-PE1 neighbor ::10.1.1.2
+set logical-systems CE1 policy-options policy-statement send-v6 from family inet6
+set logical-systems CE1 policy-options policy-statement send-v6 from protocol direct
+set logical-systems CE1 policy-options policy-statement send-v6 then accept
+set logical-systems CE1 routing-options router-id 1.1.1.4
+set logical-systems CE1 routing-options autonomous-system 1
+set logical-systems CE2 interfaces ge-0/0/2 unit 203 description to-PE2
+set logical-systems CE2 interfaces ge-0/0/2 unit 203 vlan-id 203
+set logical-systems CE2 interfaces ge-0/0/2 unit 203 family inet6 address ::10.1.1.14/126
+set logical-systems CE2 interfaces ge-0/0/2 unit 203 family mpls
+set logical-systems CE2 interfaces lo0 unit 103 family inet6 address ::1.1.1.5/128
+set logical-systems CE2 protocols bgp group toPE2 type external
+set logical-systems CE2 protocols bgp group toPE2 local-address ::10.1.1.14
+set logical-systems CE2 protocols bgp group toPE2 family inet6 unicast
+set logical-systems CE2 protocols bgp group toPE2 export send-v6
+set logical-systems CE2 protocols bgp group toPE2 peer-as 2
+set logical-systems CE2 protocols bgp group toPE2 neighbor ::10.1.1.13
+set logical-systems CE2 policy-options policy-statement send-v6 from family inet6
+set logical-systems CE2 policy-options policy-statement send-v6 from protocol direct
+set logical-systems CE2 policy-options policy-statement send-v6 then accept
+set logical-systems CE2 routing-options router-id 1.1.1.5
+set logical-systems CE2 routing-options autonomous-system 3
+set logical-systems P interfaces ge-0/0/1 unit 23 description to-PE2
+set logical-systems P interfaces ge-0/0/1 unit 23 vlan-id 23
+set logical-systems P interfaces ge-0/0/1 unit 23 family inet address 10.1.1.9/30
+set logical-systems P interfaces ge-0/0/1 unit 23 family inet6
+set logical-systems P interfaces ge-0/0/1 unit 23 family mpls
+set logical-systems P interfaces ge-0/0/2 unit 12 description to-PE1
+set logical-systems P interfaces ge-0/0/2 unit 12 vlan-id 12
+set logical-systems P interfaces ge-0/0/2 unit 12 family inet address 10.1.1.6/30
+set logical-systems P interfaces ge-0/0/2 unit 12 family inet6
+set logical-systems P interfaces ge-0/0/2 unit 12 family mpls
+set logical-systems P interfaces lo0 unit 3 family inet address 1.1.1.3/32
+set logical-systems P protocols rsvp interface ge-0/0/2.12
+set logical-systems P protocols rsvp interface ge-0/0/1.23
+set logical-systems P protocols mpls interface ge-0/0/2.12
+set logical-systems P protocols mpls interface ge-0/0/1.23
+set logical-systems P protocols ospf traffic-engineering
+set logical-systems P protocols ospf area 0.0.0.0 interface ge-0/0/2.12
+set logical-systems P protocols ospf area 0.0.0.0 interface ge-0/0/1.23
+set logical-systems P protocols ospf area 0.0.0.0 interface lo0.3 passive
+set logical-systems P routing-options router-id 1.1.1.3
+set logical-systems P routing-options autonomous-system 2
+set logical-systems PE1 interfaces ge-0/0/1 unit 12 description to-P
+set logical-systems PE1 interfaces ge-0/0/1 unit 12 vlan-id 12
+set logical-systems PE1 interfaces ge-0/0/1 unit 12 family inet address 10.1.1.5/30
+set logical-systems PE1 interfaces ge-0/0/1 unit 12 family inet6
+set logical-systems PE1 interfaces ge-0/0/1 unit 12 family mpls
+set logical-systems PE1 interfaces ge-0/0/1 unit 101 description to-CE1
+set logical-systems PE1 interfaces ge-0/0/1 unit 101 vlan-id 101
+set logical-systems PE1 interfaces ge-0/0/1 unit 101 family inet6 address ::10.1.1.2/126
+set logical-systems PE1 interfaces ge-0/0/1 unit 101 family mpls
+set logical-systems PE1 interfaces lo0 unit 2 family inet address 1.1.1.2/32
+set logical-systems PE1 protocols rsvp interface ge-0/0/1.12
+set logical-systems PE1 protocols mpls ipv6-tunneling
+set logical-systems PE1 protocols mpls label-switched-path to-PE2 to 1.1.1.4
+set logical-systems PE1 protocols mpls interface ge-0/0/1.101
+set logical-systems PE1 protocols mpls interface ge-0/0/1.102
+set logical-systems PE1 protocols mpls interface ge-0/0/1.12
+set logical-systems PE1 protocols bgp group to-CE1 type external
+set logical-systems PE1 protocols bgp group to-CE1 local-address ::10.1.1.2
+set logical-systems PE1 protocols bgp group to-CE1 family inet6 unicast
+set logical-systems PE1 protocols bgp group to-CE1 export send-bgp6
+set logical-systems PE1 protocols bgp group to-CE1 peer-as 1
+set logical-systems PE1 protocols bgp group to-CE1 neighbor ::10.1.1.1
+set logical-systems PE1 protocols bgp group to-PE2 type internal
+set logical-systems PE1 protocols bgp group to-PE2 local-address 1.1.1.2
+set logical-systems PE1 protocols bgp group to-PE2 family inet6 labeled-unicast explicit-null
+set logical-systems PE1 protocols bgp group to-PE2 export next-hop-self
+set logical-systems PE1 protocols bgp group to-PE2 export send-v6
+set logical-systems PE1 protocols bgp group to-PE2 neighbor 1.1.1.4
+set logical-systems PE1 protocols ospf traffic-engineering
+set logical-systems PE1 protocols ospf area 0.0.0.0 interface ge-0/0/1.12
+set logical-systems PE1 protocols ospf area 0.0.0.0 interface lo0.2 passive
+set logical-systems PE1 policy-options policy-statement next-hop-self then next-hop self
+set logical-systems PE1 policy-options policy-statement send-bgp6 from family inet6
+set logical-systems PE1 policy-options policy-statement send-bgp6 from protocol bgp
+set logical-systems PE1 policy-options policy-statement send-bgp6 from protocol direct
+set logical-systems PE1 policy-options policy-statement send-bgp6 then accept
+set logical-systems PE1 policy-options policy-statement send-v6 from family inet6
+set logical-systems PE1 policy-options policy-statement send-v6 from protocol bgp
+set logical-systems PE1 policy-options policy-statement send-v6 from protocol direct
+set logical-systems PE1 policy-options policy-statement send-v6 then accept
+set logical-systems PE1 routing-options router-id 1.1.1.2
+set logical-systems PE1 routing-options autonomous-system 2
+set logical-systems PE2 interfaces ge-0/0/1 unit 203 description to-CE2
+set logical-systems PE2 interfaces ge-0/0/1 unit 203 vlan-id 203
+set logical-systems PE2 interfaces ge-0/0/1 unit 203 family inet6 address ::10.1.1.13/126
+set logical-systems PE2 interfaces ge-0/0/1 unit 203 family mpls
+set logical-systems PE2 interfaces ge-0/0/2 unit 23 description to-P
+set logical-systems PE2 interfaces ge-0/0/2 unit 23 vlan-id 23
+set logical-systems PE2 interfaces ge-0/0/2 unit 23 family inet address 10.1.1.10/30
+set logical-systems PE2 interfaces ge-0/0/2 unit 23 family inet6
+set logical-systems PE2 interfaces ge-0/0/2 unit 23 family mpls
+set logical-systems PE2 interfaces lo0 unit 4 family inet address 1.1.1.4/32
+set logical-systems PE2 protocols rsvp interface ge-0/0/2.23
+set logical-systems PE2 protocols mpls ipv6-tunneling
+set logical-systems PE2 protocols mpls label-switched-path to-PE1 to 1.1.1.2
+set logical-systems PE2 protocols mpls interface ge-0/0/2.23
+set logical-systems PE2 protocols mpls interface ge-0/0/1.13
+set logical-systems PE2 protocols bgp group to-PE1 type internal
+set logical-systems PE2 protocols bgp group to-PE1 local-address 1.1.1.4
+set logical-systems PE2 protocols bgp group to-PE1 family inet6 labeled-unicast explicit-null
+set logical-systems PE2 protocols bgp group to-PE1 export next-hop-self
+set logical-systems PE2 protocols bgp group to-PE1 export send-v6
+set logical-systems PE2 protocols bgp group to-PE1 neighbor 1.1.1.2
+set logical-systems PE2 protocols bgp group to-CE3 type external
+set logical-systems PE2 protocols bgp group to-CE3 local-address ::10.1.1.13
+set logical-systems PE2 protocols bgp group to-CE3 family inet6 unicast
+set logical-systems PE2 protocols bgp group to-CE3 export send-bgp6
+set logical-systems PE2 protocols bgp group to-CE3 peer-as 3
+set logical-systems PE2 protocols bgp group to-CE3 neighbor ::10.1.1.14
+set logical-systems PE2 protocols ospf traffic-engineering
+set logical-systems PE2 protocols ospf area 0.0.0.0 interface ge-0/0/2.23
+set logical-systems PE2 protocols ospf area 0.0.0.0 interface lo0.4 passive
+set logical-systems PE2 policy-options policy-statement next-hop-self then next-hop self
+set logical-systems PE2 policy-options policy-statement send-bgp6 from family inet6
+set logical-systems PE2 policy-options policy-statement send-bgp6 from protocol bgp
+set logical-systems PE2 policy-options policy-statement send-v6 from family inet6
+set logical-systems PE2 policy-options policy-statement send-v6 from protocol bgp
+set logical-systems PE2 policy-options policy-statement send-v6 from protocol direct
+set logical-systems PE2 policy-options policy-statement send-v6 then accept
+set logical-systems PE2 routing-options router-id 1.1.1.4
+set logical-systems PE2 routing-options autonomous-system 2
+set interfaces ge-0/0/0 unit 0 family inet address 192.168.10.15/24
+set interfaces ge-0/0/1 description "Loop connect to ge-0/0/2"
+set interfaces ge-0/0/1 vlan-tagging
+set interfaces ge-0/0/2 description "Loop connect to ge-0/0/1"
+set interfaces ge-0/0/2 flexible-vlan-tagging
